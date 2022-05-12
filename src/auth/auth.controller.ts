@@ -1,6 +1,6 @@
 import { Body, Controller, ParseBoolPipe, ParseIntPipe, Post, Req } from "@nestjs/common";
 import { Interface } from "readline";
-import { Auth_dto } from "src/dto";
+import { Auth_DTO } from "src/dto";
 import { AuthService } from "./auth.service";
 
 
@@ -10,7 +10,7 @@ export class AuthController{
     
     /*  /auth/signup   */
     @Post("signup")
-    signup(@Body() dto : Auth_dto){
+    signup(@Body() dto : Auth_DTO){
         console.log({
             email: dto.email ,
             password : dto.password,
@@ -19,7 +19,7 @@ export class AuthController{
     }
     /*  /auth/signin   */
     @Post("signin")
-    signin(){
-        return this.authService.signin();
+    signin(@Body() dto : Auth_DTO){
+        return this.authService.signin(dto);
     }
 }
