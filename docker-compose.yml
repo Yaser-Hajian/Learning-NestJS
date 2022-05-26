@@ -8,4 +8,11 @@ services:
       POSTGRES: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest 
-   
+  test-db:
+    image: postgres:13
+    ports: 
+      - 5435:5432
+    environment:
+      POSTGRES: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest 

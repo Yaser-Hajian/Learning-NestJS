@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, ParseBoolPipe, ParseIntPipe, Post, Req } from "@nestjs/common";
 import { Interface } from "readline";
-import { Auth_DTO } from "src/auth/dto";
+import { Auth_DTO } from "./dto";
 import { AuthService } from "./auth.service";
 
 

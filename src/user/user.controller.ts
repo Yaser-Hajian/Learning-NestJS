@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards , Request } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { GetUser } from "src/auth/decorator";
-import { JwtGuard } from "src/auth/guard";
+import { GetUser } from "../auth/decorator";
+import { JwtGuard } from "../auth/guard";
 import {User} from "@prisma/client"
 
 @UseGuards(JwtGuard)
