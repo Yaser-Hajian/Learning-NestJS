@@ -5,6 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
 import { Auth_DTO } from '../src/auth/dto';
 import { getMaxListeners } from 'process';
+import { EditUserDTO } from '../src/user/dto';
 describe('App e2e', () => {
   let app: INestApplication;
   let prisma: PrismaService;
@@ -27,7 +28,7 @@ describe('App e2e', () => {
   describe('Auth', () => {
     const dto: Auth_DTO = {
       email: 'salam1@getMaxListeners.com',
-      password: '123'
+      password: '123',
     };
     describe('Signup', () => {
       it('should throw if email is empty', () => {
@@ -52,7 +53,11 @@ describe('App e2e', () => {
         return pactum.spec().post('/auth/signup').expectStatus(400);
       });
       it('Should signup', () => {
-        return pactum.spec().post('/auth/signup').withBody(dto).expectStatus(201);
+        return pactum
+          .spec()
+          .post('/auth/signup')
+          .withBody(dto)
+          .expectStatus(201);
       });
     });
     describe('Signin', () => {
@@ -99,35 +104,47 @@ describe('App e2e', () => {
           .expectStatus(403);
       });
       it('Should signin', () => {
-       return pactum
-        .spec()
-        .post('/auth/signin')
-        .withBody(dto)
-        .expectStatus(200)
-        .stores("userAT" , "access_token");
+        return pactum
+          .spec()
+          .post('/auth/signin')
+          .withBody(dto)
+          .expectStatus(200)
+          .stores('userAT', 'access_token');
       });
-      
     });
   });
   describe('User', () => {
     describe('Get me', () => {
-      it("should throw without access token" , () => {
-        return pactum
-        .spec()
-        .get('/users/me')
-        .expectStatus(401)
+      it('should throw without access token', () => {
+        return pactum.spec().get('/users/me').expectStatus(401);
       });
-      it("should get cuurent user" , () => {
+      it('should get cuurent user', () => {
         return pactum
-        .spec()
-        .get('/users/me')
-        .withHeaders({
-          Authorization : "Bearer $S{userAT}"
-        })
-        .expectStatus(200)
+          .spec()
+          .get('/users/me')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAT}',
+          })
+          .expectStatus(200);
       });
     });
-    describe('Edit User', () => {});
+    describe('Edit User', () => {
+      const userDTO: EditUserDTO = {
+        lastName: 'Alavi',
+        firstName: 'Ali',
+      };
+      it('should edit user', () => {
+        return pactum
+          .spec()
+          .patch('/users')
+          .withBody(userDTO)
+          .withHeaders({
+            Authorization: 'Bearer $S{userAT}',
+          })
+          .expectStatus(200)
+          .inspect();
+      });
+    });
   });
   describe('Bookmarks', () => {
     describe('Create bookmark', () => {});
