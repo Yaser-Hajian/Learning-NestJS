@@ -27,9 +27,7 @@ describe('App e2e', () => {
   describe('Auth', () => {
     const dto: Auth_DTO = {
       email: 'salam1@getMaxListeners.com',
-      password: '123',
-      firstName: null,
-      lastName: null,
+      password: '123'
     };
     describe('Signup', () => {
       it('should throw if email is empty', () => {
